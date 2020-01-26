@@ -31,11 +31,11 @@ def registered():
     
     # Logout stream after not logging out.
     
-    if choix == 'No':
+    if choix.lower() == 'no':
         print("Ok.")
         podow = input('Would you like to end this session?')
         
-        if podow == 'Yes':
+        if podow.lower() == 'yes':
             print('Quitting...')
             sys.exit()
             
@@ -43,7 +43,7 @@ def registered():
             print('Ok, staying online.')
             registered()
             
-    if choix == 'Yes':
+    if choix.lower() == 'yes':
         print("Logging out...")       
 
 while not registered():
