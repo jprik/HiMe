@@ -17,7 +17,7 @@ def aiTurn():
         aiTurn.aiChoiceStr = 'Scissors'
 
 def isWinner(playerChoice, aiChoice):
-    if playerChoice == 'Rock' and aiChoice == 'Paper:
+    if playerChoice == 'Rock' and aiChoice == 'Paper':
         return True
     elif playerChoice == 'Paper' and aiChoice == 'Rock':
         return True
