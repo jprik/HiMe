@@ -15,37 +15,29 @@ def aiTurn():
         aiTurn.aiChoiceStr = 'Paper'
     elif aiChoiceInt == 3:
         aiTurn.aiChoiceStr = 'Scissors'
+
+def isWinner(playerChoice, aiChoice):
+    if playerChoice == 'Rock' and aiChoice == 'Paper:
+        return True
+    elif playerChoice == 'Paper' and aiChoice == 'Rock':
+        return True
+    elif playerChoice == 'Scissors' and aiChoice == 'Paper':
+        return True
+    return False
         
 def playerTurn():
     print('Your move!')
     playerChoiceStr = input()
-    if playerChoiceStr == 'Rock' and aiTurn.aiChoiceStr == 'Rock':
-        scoreKeeper.ties = scoreKeeper.ties + 1
-        print('Tie game!')     
-    elif playerChoiceStr == 'Rock' and aiTurn.aiChoiceStr == 'Scissors':
-        scoreKeeper.wins = scoreKeeper.wins + 1
-        print('You win!')
-    elif playerChoiceStr == 'Rock' and aiTurn.aiChoiceStr == 'Paper':
-        scoreKeeper.losses = scoreKeeper.losses + 1
-        print('You lose!')
-    elif playerChoiceStr == 'Paper' and aiTurn.aiChoiceStr == 'Rock':
-        scoreKeeper.wins = scoreKeeper.wins + 1
-        print('You win!')
-    elif playerChoiceStr == 'Paper' and aiTurn.aiChoiceStr == 'Paper':
-        scoreKeeper.ties = scoreKeeper.ties + 1 
+    print('Ai Chose {}'.format(aiTurn.aiChoiceStr))
+    
+    if playerChoiceStr == aiTurn.aiChoiceStr:
         print('Tie game!')
-    elif playerChoiceStr == 'Paper' and aiTurn.aiChoiceStr == 'Scissors':
-        scoreKeeper.losses = scoreKeeper.losses + 1
-        print('You lose!')
-    elif playerChoiceStr == 'Scissors' and aiTurn.aiChoiceStr == 'Rock':
-        scoreKeeper.losses = scoreKeeper.losses + 1
-        print('You lose!')
-    elif playerChoiceStr == 'Scissors' and aiTurn.aiChoiceStr == 'Paper':
-        scoreKeeper.wins = scoreKeeper.wins + 1
-        print('You win!')
-    elif playerChoiceStr == 'Paper' and aiTurn.aiChoiceStr == 'Scissors':
-        scoreKeeper.losses = scoreKeeper.losses + 1
-        print('You lose!')
+    elif playerChoiceStr != aiTurn.aiChoiceStr:
+        value = isWinner(playerChoiceStr, aiTurn.aiChoiceStr)
+        if value == True:
+            print('Congratulations, you won!')
+        else:
+            print('Better luck next time!')
         
 aiTurn()        
 playerTurn()
