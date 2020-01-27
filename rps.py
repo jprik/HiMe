@@ -1,59 +1,78 @@
-import random
+import random, sys
+
+
+def scoreKeeper():
+    scoreKeeper.ties = 0
+    scoreKeeper.wins = 0
+    scoreKeeper.losses = 0
+
+scoreKeeper()
 
 def gameState():
 
-    def scoreKeeper(): # this has to be moved outside of the gameState function or it will reset each time it is run.
-        scoreKeeper.ties = 0
-        scoreKeeper.wins = 0
-        scoreKeeper.losses = 0
+    print('Current score is %d tie(s), %d win(s), and %d losse(s).'%(scoreKeeper.ties, scoreKeeper.wins, scoreKeeper.losses))
+
+    quitDecide = input('**Press (q) to quit game, Press enter to resume...**')
+
+    if quitDecide.lower == 'q':
+        sys.exit()
+
+    else:
+
+        def aiTurn():
+
+            aiChoiceInt = random.randint(1, 3)
+            if aiChoiceInt == 1:
+                aiTurn.aiChoiceStr = 'Rock'
+            elif aiChoiceInt == 2:
+                aiTurn.aiChoiceStr = 'Paper'
+            elif aiChoiceInt == 3:
+                aiTurn.aiChoiceStr = 'Scissors'
 
 
-    def aiTurn():
+        def isWinner(playerChoice, aiChoice):
 
-        aiChoiceInt = random.randint(1, 3)
-        if aiChoiceInt == 1:
-            aiTurn.aiChoiceStr = 'Rock'
-        elif aiChoiceInt == 2:
-            aiTurn.aiChoiceStr = 'Paper'
-        elif aiChoiceInt == 3:
-            aiTurn.aiChoiceStr = 'Scissors'
+            if playerChoice == 'Rock' and aiChoice == 'Paper':
+                scoreKeeper.losses += 1
+                return False
 
+            elif playerChoice == 'Paper' and aiChoice == 'Rock':
+                scoreKeeper.wins += 1
+                return True
 
-    def isWinner(playerChoice, aiChoice):
+            elif playerChoice == 'Scissors' and aiChoice == 'Paper':
+                scoreKeeper.wins += 1
+                return True
 
-        if playerChoice == 'Rock' and aiChoice == 'Paper':
-            return False
+            elif playerChoice == 'Scissors' and aiChoice == 'Rock':
+                scoreKeeper.losses += 1
+                return False
 
-        elif playerChoice == 'Paper' and aiChoice == 'Rock':
-            return True
+        def playerTurn():
+            print('--Your move!--')
 
-        elif playerChoice == 'Scissors' and aiChoice == 'Paper':
-            return True
+            playerChoiceStr = input()
 
-        elif playerChoice == 'Scissors' and aiChoice == 'Rock':
-            return False
+            print('AI Chose %s'%(aiTurn.aiChoiceStr))
 
-    def playerTurn():
-        print('Your move!')
-
-        playerChoiceStr = input()
-
-        print('AI Chose {}'.format(aiTurn.aiChoiceStr))
-
-        if playerChoiceStr == aiTurn.aiChoiceStr:
-            print('Tie game!')
-
-        elif playerChoiceStr != aiTurn.aiChoiceStr:
-            value = isWinner(playerChoiceStr, aiTurn.aiChoiceStr)
-
-            if value is True:
-                print('Congratulations, you have won!')
+            if playerChoiceStr == aiTurn.aiChoiceStr:
+                print('!!Tie game!!')
+                scoreKeeper.ties += 1
                 gameState()
 
-            else:
-                print('Better luck next time!')
-                gameState()
+            elif playerChoiceStr != aiTurn.aiChoiceStr:
+                value = isWinner(playerChoiceStr, aiTurn.aiChoiceStr)
 
-    aiTurn()
-    playerTurn()
+                if value is True:
+                    print('!!Congratulations, you have won!!')
+                    gameState()
+
+                else:
+                    print('!!Better luck next time!!')
+                    gameState()
+
+        aiTurn()
+        playerTurn()
+
+
 gameState()
