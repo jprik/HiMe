@@ -2,7 +2,7 @@ import random
 
 def gameState():
 
-    def scoreKeeper():
+    def scoreKeeper(): # this has to be moved outside of the gameState function or it will reset each time it is run.
         scoreKeeper.ties = 0
         scoreKeeper.wins = 0
         scoreKeeper.losses = 0
