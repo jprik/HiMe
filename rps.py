@@ -12,12 +12,10 @@ def gameState():
 
     print('Current score is %d tie(s), %d win(s), and %d losse(s).'%(scoreKeeper.ties, scoreKeeper.wins, scoreKeeper.losses))
 
-    quitDecide = input('**Press (q) to quit game, Press enter to resume...**')
+    quitDecide = input('**Press (q) to quit game, Press enter to resume...**: ')
 
     if quitDecide == 'q':
-
-        sys.exit()
-        
+        return 1
 
     else:
 
@@ -25,58 +23,59 @@ def gameState():
 
             aiChoiceInt = random.randint(1, 3)
             if aiChoiceInt == 1:
-                aiTurn.aiChoiceStr = 'Rock'
+                aiTurn.aiChoiceStr = 'rock'
             elif aiChoiceInt == 2:
-                aiTurn.aiChoiceStr = 'Paper'
+                aiTurn.aiChoiceStr = 'paper'
             elif aiChoiceInt == 3:
-                aiTurn.aiChoiceStr = 'Scissors'
+                aiTurn.aiChoiceStr = 'scissors'
 
 
         def isWinner(playerChoice, aiChoice):
-
-            if playerChoice == 'Rock' and aiChoice == 'Paper':
-                scoreKeeper.losses + 1
-                return False
-
-            elif playerChoice == 'Paper' and aiChoice == 'Rock':
+            if playerChoice == 'rock' and aiChoice == 'scissors':
                 scoreKeeper.wins + 1
                 return True
-
-            elif playerChoice == 'Scissors' and aiChoice == 'Paper':
+            elif playerChoice == 'paper' and aiChoice == 'rock':
                 scoreKeeper.wins + 1
                 return True
-
-            elif playerChoice == 'Scissors' and aiChoice == 'Rock':
-                scoreKeeper.losses + 1
+            elif playerChoice == 'scissors' and aiChoice == 'paper':
+                scoreKeeper.wins + 1
+                return True
+            else:
+                # At this point, the player cannot tie
+                # or win, so therefore the player can only
+                # lose.
                 return False
 
         def playerTurn():
             print('--Your move!--')
 
-            playerChoiceStr = input()
+            # Convert input to lower-case
+            playerChoiceStr = input().lower().strip()
 
-            print('AI Chose %s'%(aiTurn.aiChoiceStr))
+            print(f'You chose {playerChoiceStr}')
+            print(f'AI chose {aiTurn.aiChoiceStr}')
 
             if playerChoiceStr == aiTurn.aiChoiceStr:
                 print('!!Tie game!!')
                 scoreKeeper.ties += 1
-                gameState()
-
-            elif playerChoiceStr != aiTurn.aiChoiceStr:
-                value = isWinner(playerChoiceStr, aiTurn.aiChoiceStr)
-
-                if value is True:
+                return
+            else:
+                won = isWinner(playerChoiceStr, aiTurn.aiChoiceStr)
+                if won:
                     print('!!Congratulations, you have won!!')
-                    scoreKeeper.wins +=1
-                    gameState()
-
+                    scoreKeeper.wins += 1
+                    return
                 else:
                     print('!!Better luck next time!!')
                     scoreKeeper.losses += 1
-                    gameState()
+                    return
 
         aiTurn()
         playerTurn()
+        return 0
 
 
-gameState()
+state = 0
+while state== 0:
+    state = gameState()
+    
