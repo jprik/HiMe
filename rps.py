@@ -1,4 +1,4 @@
-import random, sys
+import random, sys, os
 
 
 def scoreKeeper():
@@ -14,8 +14,10 @@ def gameState():
 
     quitDecide = input('**Press (q) to quit game, Press enter to resume...**')
 
-    if quitDecide.lower == 'q':
+    if quitDecide == 'q':
+
         sys.exit()
+        
 
     else:
 
@@ -33,19 +35,19 @@ def gameState():
         def isWinner(playerChoice, aiChoice):
 
             if playerChoice == 'Rock' and aiChoice == 'Paper':
-                scoreKeeper.losses += 1
+                scoreKeeper.losses + 1
                 return False
 
             elif playerChoice == 'Paper' and aiChoice == 'Rock':
-                scoreKeeper.wins += 1
+                scoreKeeper.wins + 1
                 return True
 
             elif playerChoice == 'Scissors' and aiChoice == 'Paper':
-                scoreKeeper.wins += 1
+                scoreKeeper.wins + 1
                 return True
 
             elif playerChoice == 'Scissors' and aiChoice == 'Rock':
-                scoreKeeper.losses += 1
+                scoreKeeper.losses + 1
                 return False
 
         def playerTurn():
@@ -65,10 +67,12 @@ def gameState():
 
                 if value is True:
                     print('!!Congratulations, you have won!!')
+                    scoreKeeper.wins +=1
                     gameState()
 
                 else:
                     print('!!Better luck next time!!')
+                    scoreKeeper.losses += 1
                     gameState()
 
         aiTurn()
